@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
@@ -29,7 +30,7 @@ class SeedCategoriesData extends Migration
             ],
         ];
 
-        DB::table('categories')->insert($categories);
+        Category::insert($categories);
     }
 
     /**

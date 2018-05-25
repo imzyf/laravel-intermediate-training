@@ -26,7 +26,7 @@ class TopicsController extends Controller
     public function show(Request $request, Topic $topic)
     {
         // URL 矫正
-        if ( ! empty($topic->slug) && $topic->slug != $request->slug) {
+        if (!empty($topic->slug) && $topic->slug != $request->slug) {
             return redirect($topic->link(), 301);
         }
 
@@ -36,6 +36,7 @@ class TopicsController extends Controller
     public function create(Topic $topic)
     {
         $categories = Category::all();
+
         return view('topics.create_and_edit', compact('topic', 'categories'));
     }
 
@@ -45,13 +46,14 @@ class TopicsController extends Controller
         $topic->user_id = Auth::id();
         $topic->save();
 
-        return redirect()->to($topic->link())>with('success', '创建话题成功！');
+        return redirect()->to($topic->link())->with('success', '成功创建话题！');
     }
 
     public function edit(Topic $topic)
     {
         $this->authorize('update', $topic);
         $categories = Category::all();
+
         return view('topics.create_and_edit', compact('topic', 'categories'));
     }
 
@@ -75,9 +77,9 @@ class TopicsController extends Controller
     {
         // 初始化返回数据，默认是失败的
         $data = [
-            'success'   => false,
-            'msg'       => '上传失败!',
-            'file_path' => ''
+            'success' => false,
+            'msg' => '上传失败!',
+            'file_path' => '',
         ];
         // 判断是否有上传文件，并赋值给 $file
         if ($file = $request->upload_file) {
@@ -86,10 +88,11 @@ class TopicsController extends Controller
             // 图片保存成功的话
             if ($result) {
                 $data['file_path'] = $result['path'];
-                $data['msg']       = "上传成功!";
-                $data['success']   = true;
+                $data['msg'] = '上传成功!';
+                $data['success'] = true;
             }
         }
+
         return $data;
     }
 }

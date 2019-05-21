@@ -29,6 +29,7 @@ class TopicObserver
 
     public function deleted(Topic $topic)
     {
+        // 防止模型的监听事件的循环调用
         \DB::table('replies')->where('topic_id', $topic->id)->delete();
     }
 }
